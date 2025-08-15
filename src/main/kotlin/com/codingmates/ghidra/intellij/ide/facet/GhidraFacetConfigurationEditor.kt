@@ -33,7 +33,7 @@ class GhidraFacetConfigurationEditor(
 
     private val propertyGraph = PropertyGraph()
     private val installationDir = propertyGraph.property(state.installationPath)
-    private val settingsDir = propertyGraph.property(state.settingsPath?.toString() ?: "")
+    private val settingsDir = propertyGraph.property(state.settingsPath ?: "")
     private val version = propertyGraph.property(state.version ?: "")
     private val applied = propertyGraph.property(false)
 
@@ -48,8 +48,9 @@ class GhidraFacetConfigurationEditor(
                 val title = GhidraBundle.message("ghidra.facet.editor.installation.dialog.title")
                 val fileChooserDescriptor = FileChooserDescriptorFactory.createSingleFolderDescriptor()
                     .withPathToTextConvertor(::getPresentablePath).withTextToPathConvertor(::getCanonicalPath)
+                    .withTitle(title)
 
-                textFieldWithBrowseButton(title, context.project, fileChooserDescriptor)
+                textFieldWithBrowseButton(fileChooserDescriptor, context.project)
                     .bindText(installationDir.toUiPathProperty())
                     .applyToComponent { setEmptyState(GhidraBundle.message("ghidra.facet.editor.installation.empty")) }
                     .align(AlignX.FILL)
