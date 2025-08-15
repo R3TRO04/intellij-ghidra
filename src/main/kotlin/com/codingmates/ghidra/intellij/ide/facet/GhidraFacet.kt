@@ -20,7 +20,7 @@ class GhidraFacet(
         get() = configuration.ghidraState.installationPath
 
     companion object {
-        fun findAnyInProject(project: Project): GhidraFacet = ModuleManager.getInstance(project)
-            .modules.firstNotNullOf { FacetManager.getInstance(it).getFacetByType(FACET_TYPE_ID) }
+        fun findAnyInProject(project: Project): GhidraFacet? = ModuleManager.getInstance(project)
+            .modules.firstNotNullOfOrNull { FacetManager.getInstance(it).getFacetByType(FACET_TYPE_ID) }
     }
 }
